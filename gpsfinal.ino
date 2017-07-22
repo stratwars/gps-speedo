@@ -2,8 +2,8 @@
 #include <SoftwareSerial.h>
 #include <math.h>
 
-static const int RXPin = 11, TXPin = 10;
-static const uint32_t GPSBaud = 115200;
+static const int RXPin = 10, TXPin = 11;
+static const uint32_t GPSBaud = 9600;
 
 TinyGPSPlus gps;
 SoftwareSerial ss(RXPin, TXPin);
@@ -17,7 +17,8 @@ int D11 = 7;
 int D22 = 8;
 int D33 = 9;
 
-void setup() {
+void setup() 
+{
  pinMode(2, OUTPUT);
  pinMode(3, OUTPUT);
  pinMode(4, OUTPUT);
@@ -41,16 +42,19 @@ void setup() {
 }
 
 void loop() {
+  if (gps.speed.isUpdated())
+  {
   disp(gps.speed.mph());
-  Serial.println(gps.speed.kmph(), gps.speed.isValid());
-  
+  Serial.println(gps.speed.mph(), gps.speed.isValid());
+  }
   
 }
 
 void disp(float d) {
-  
-  int ones = ((int) d%10);
-  int tens = ((d/10)%10);
+  d = roundf(d);
+  int dd = (int) d;
+  int ones = (dd%10);
+  int tens = ((dd/10)%10);
 
   switch(ones){
     case 0:
@@ -59,6 +63,7 @@ void disp(float d) {
     digitalWrite(D1, LOW);
     digitalWrite(D2, LOW);
     digitalWrite(D3, LOW);
+    
     }
     break; 
     case 1:
@@ -66,7 +71,8 @@ void disp(float d) {
     digitalWrite(D0, HIGH);
     digitalWrite(D1, LOW);
     digitalWrite(D2, LOW);
-    digitalWrite(D3, LOW);  
+    digitalWrite(D3, LOW); 
+    
     }
     break;
     case 2:
@@ -74,7 +80,8 @@ void disp(float d) {
     digitalWrite(D0, LOW);
     digitalWrite(D1, HIGH);
     digitalWrite(D2, LOW);
-    digitalWrite(D3, LOW);  
+    digitalWrite(D3, LOW);
+     
     }
     break;
     case 3:
@@ -82,7 +89,8 @@ void disp(float d) {
     digitalWrite(D0, HIGH);
     digitalWrite(D1, HIGH);
     digitalWrite(D2, LOW);
-    digitalWrite(D3, LOW); 
+    digitalWrite(D3, LOW);
+     
     }
     break;
     case 4:
@@ -90,7 +98,8 @@ void disp(float d) {
     digitalWrite(D0, LOW);
     digitalWrite(D1, LOW);
     digitalWrite(D2, HIGH);
-    digitalWrite(D3, LOW);  
+    digitalWrite(D3, LOW); 
+    
     }
     break;
     case 5:
@@ -98,7 +107,8 @@ void disp(float d) {
     digitalWrite(D0, HIGH);
     digitalWrite(D1, LOW);
     digitalWrite(D2, HIGH);
-    digitalWrite(D3, LOW);  
+    digitalWrite(D3, LOW);
+    
     }
     break;
     case 6:
@@ -106,7 +116,8 @@ void disp(float d) {
     digitalWrite(D0, LOW);
     digitalWrite(D1, HIGH);
     digitalWrite(D2, HIGH);
-    digitalWrite(D3, LOW);  
+    digitalWrite(D3, LOW);
+      
     }
     break;
     case 7:
@@ -114,7 +125,8 @@ void disp(float d) {
     digitalWrite(D0, HIGH);
     digitalWrite(D1, HIGH);
     digitalWrite(D2, HIGH);
-    digitalWrite(D3, LOW);  
+    digitalWrite(D3, LOW);
+     
     }
     break;
     case 8:
@@ -122,7 +134,8 @@ void disp(float d) {
     digitalWrite(D0, LOW);
     digitalWrite(D1, LOW);
     digitalWrite(D2, LOW);
-    digitalWrite(D3, HIGH);  
+    digitalWrite(D3, HIGH);
+     
     }
     break;
     case 9:
@@ -130,7 +143,8 @@ void disp(float d) {
     digitalWrite(D0, HIGH);
     digitalWrite(D1, LOW);
     digitalWrite(D2, LOW);
-    digitalWrite(D3, HIGH);  
+    digitalWrite(D3, HIGH);
+    
     }
     break;
     
@@ -142,6 +156,7 @@ void disp(float d) {
     digitalWrite(D11, LOW);
     digitalWrite(D22, LOW);
     digitalWrite(D33, LOW);
+    
     }
     break; 
     case 1:
@@ -149,7 +164,8 @@ void disp(float d) {
     digitalWrite(D00, HIGH);
     digitalWrite(D11, LOW);
     digitalWrite(D22, LOW);
-    digitalWrite(D33, LOW);  
+    digitalWrite(D33, LOW);
+    
     }
     break;
     case 2:
@@ -157,7 +173,8 @@ void disp(float d) {
     digitalWrite(D00, LOW);
     digitalWrite(D11, HIGH);
     digitalWrite(D22, LOW);
-    digitalWrite(D33, LOW);  
+    digitalWrite(D33, LOW);
+     
     }
     break;
     case 3:
@@ -166,6 +183,7 @@ void disp(float d) {
     digitalWrite(D11, HIGH);
     digitalWrite(D22, LOW);
     digitalWrite(D33, LOW); 
+   
     }
     break;
     case 4:
@@ -173,7 +191,8 @@ void disp(float d) {
     digitalWrite(D00, LOW);
     digitalWrite(D11, LOW);
     digitalWrite(D22, HIGH);
-    digitalWrite(D33, LOW);  
+    digitalWrite(D33, LOW); 
+    
     }
     break;
     case 5:
@@ -181,7 +200,8 @@ void disp(float d) {
     digitalWrite(D00, HIGH);
     digitalWrite(D11, LOW);
     digitalWrite(D22, HIGH);
-    digitalWrite(D33, LOW);  
+    digitalWrite(D33, LOW); 
+    
     }
     break;
     case 6:
@@ -189,7 +209,8 @@ void disp(float d) {
     digitalWrite(D00, LOW);
     digitalWrite(D11, HIGH);
     digitalWrite(D22, HIGH);
-    digitalWrite(D33, LOW);  
+    digitalWrite(D33, LOW);
+      
     }
     break;
     case 7:
@@ -197,7 +218,8 @@ void disp(float d) {
     digitalWrite(D00, HIGH);
     digitalWrite(D11, HIGH);
     digitalWrite(D22, HIGH);
-    digitalWrite(D33, LOW);  
+    digitalWrite(D33, LOW); 
+     
     }
     break;
     case 8:
@@ -205,7 +227,8 @@ void disp(float d) {
     digitalWrite(D00, LOW);
     digitalWrite(D11, LOW);
     digitalWrite(D22, LOW);
-    digitalWrite(D33, HIGH);  
+    digitalWrite(D33, HIGH); 
+     
     }
     break;
     case 9:
@@ -213,10 +236,10 @@ void disp(float d) {
     digitalWrite(D00, HIGH);
     digitalWrite(D11, LOW);
     digitalWrite(D22, LOW);
-    digitalWrite(D33, HIGH);  
+    digitalWrite(D33, HIGH);
+    
     }
     break;
   }
   
 }
-
